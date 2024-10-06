@@ -35,5 +35,15 @@ namespace CalMvvm
         {
             
         }
+
+        private void Button_Basic(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Result(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

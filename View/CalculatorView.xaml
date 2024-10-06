@@ -10,14 +10,13 @@
                            Width="400" MinWidth="300">
     <DockPanel LastChildFill="True">
         <!-- 결과창 -->
-        <Grid Height="100" DockPanel.Dock="Top" Background="WhiteSmoke"
-         >
-            <TextBox x:Name="txtExp" 
+        <Grid Height="100" DockPanel.Dock="Top" Background="WhiteSmoke">
+            <TextBox x:Name="txtExpression" 
                      FontSize="16" 
                      HorizontalContentAlignment="Right"
                      Margin="15"
                      BorderThickness="0"
-                     Text=""
+                     Text="{Binding Expression}"
                      Background="WhiteSmoke"/>
             <TextBox x:Name="txtResult"
                      FontSize="36" 
@@ -26,7 +25,7 @@
                      FontWeight="Bold"
                      BorderThickness="0"
                      Margin="15"
-                     Text="{Binding Var}"
+                     Text="{Binding Result}"
                      Background="WhiteSmoke">
             </TextBox>
         </Grid>
@@ -142,7 +141,14 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="÷"/>
+                    Content="÷"
+                    Click="Button_Basic">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <!-- 셋째줄 -->
             <Button Grid.Row="2"
                     Grid.Column="0"
@@ -223,7 +229,14 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="×"/>
+                    Content="×"
+                    Click="Button_Basic">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <!-- 넷째줄 -->
             <Button x:Name="btn4" Grid.Row="3"
                     Grid.Column="0"
@@ -275,7 +288,14 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="－"/>
+                    Content="－"
+                    Click="Button_Basic">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <!-- 다섯째줄 -->
             <Button x:Name="btn1" Grid.Row="4"
                     Grid.Column="0"
@@ -327,7 +347,14 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="+"/>
+                    Content="+"
+                    Click="Button_Basic">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+            </Button>
             <!-- 여섯째줄 -->
             <Button x:Name="btnSign" Grid.Row="5"
                     Grid.Column="0"
@@ -369,7 +396,13 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="="/>
+                    Content="=" Click="Button_Result">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="Click">
+                    <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Result"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+            </Button>
         </Grid>
     </DockPanel>
 </Window>
