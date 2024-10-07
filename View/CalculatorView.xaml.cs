@@ -23,27 +23,10 @@ namespace CalMvvm
     {
         public CalculatorView()
         {
-           /* CalculatorViewModel calcVM = new CalculatorViewModel();
-            DataContext = calcVM;*/
 
             InitializeComponent();
 
             DataContext = new CalculatorViewModel();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Button_Basic(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Result(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

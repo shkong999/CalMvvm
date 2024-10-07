@@ -6,8 +6,8 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors" 
         x:Class="CalMvvm.CalculatorView"
         mc:Ignorable="d"
-        Title="MainWindow" Height="580" MinHeight="500"
-                           Width="400" MinWidth="300">
+        Title="계산기" Height="580" MinHeight="500"
+                       Width="400" MinWidth="300">
     <DockPanel LastChildFill="True">
         <!-- 결과창 -->
         <Grid Height="100" DockPanel.Dock="Top" Background="WhiteSmoke">
@@ -87,7 +87,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -98,51 +98,92 @@
                     FontSize="18"
                     BorderThickness="0"
                     Content="%"
-                    x:Name="btnPercent"/>
+                    x:Name="btnPercent">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnCe" Grid.Row="0"
                     Grid.Column="1"
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="CE"/>
+                    Content="CE">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Clear"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnC" Grid.Row="0"
                     Grid.Column="2"
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="C"/>
+                    Content="C">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Clear"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnRemove" Grid.Row="0"
                     Grid.Column="3"
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="←"/>
+                    Content="←">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Clear"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <!-- 둘째줄 -->
             <Button x:Name="btnFraction" Grid.Row="1"
                     Grid.Column="0"
                     Margin="3,1,0,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="1/x"/>
+                    Content="1/x">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnSquare" Grid.Row="1"
                     Grid.Column="1"
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="x²"/>
+                    Content="x²">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnRoute" Grid.Row="1"
                     Grid.Column="2"
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="√"/>
+                    Content="√">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnDivide" Grid.Row="1"
                     Grid.Column="3"
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="÷"
-                    Click="Button_Basic">
+                    Content="÷">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
@@ -186,8 +227,7 @@
                     BorderThickness="0"
                     Content="7"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -201,8 +241,7 @@
                     BorderThickness="0"
                     Content="8"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -216,8 +255,7 @@
                     BorderThickness="0"
                     Content="9"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -229,8 +267,7 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="×"
-                    Click="Button_Basic">
+                    Content="×">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
@@ -245,8 +282,7 @@
                     BorderThickness="0"
                     Content="4"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Command="{Binding bb}">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -260,8 +296,7 @@
                     BorderThickness="0"
                     Content="5"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -275,8 +310,7 @@
                     BorderThickness="0"
                     Content="6"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -288,8 +322,7 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="－"
-                    Click="Button_Basic">
+                    Content="－">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
@@ -304,8 +337,7 @@
                     BorderThickness="0"
                     Content="1"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -319,8 +351,7 @@
                     BorderThickness="0"
                     Content="2"
                     FontWeight="Bold"
-                    Background="WhiteSmoke"
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -334,8 +365,7 @@
                     BorderThickness="0"
                     Content="3"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -347,8 +377,7 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="+"
-                    Click="Button_Basic">
+                    Content="+">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
@@ -361,7 +390,13 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="±"/>
+                    Content="±">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Click">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special2"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Button>
             <Button x:Name="btn0" Grid.Row="5"
                     Grid.Column="1"
                     Margin="2,1,1,1"
@@ -369,8 +404,7 @@
                     BorderThickness="0"
                     Content="0"
                     FontWeight="Bold"
-                    Background="WhiteSmoke" 
-                    Click="Button_Click">
+                    Background="WhiteSmoke">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -383,8 +417,7 @@
                     FontSize="18"
                     BorderThickness="0"
                     Content="."
-                    FontWeight="Bold"
-                    Click="Button_Click">
+                    FontWeight="Bold">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
@@ -396,7 +429,7 @@
                     Margin="2,1,1,1"
                     FontSize="18"
                     BorderThickness="0"
-                    Content="=" Click="Button_Result">
+                    Content="=">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="Click">
                     <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Result"/>

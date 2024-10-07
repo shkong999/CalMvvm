@@ -16,8 +16,8 @@ namespace CalMvvm
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        // 연산기호 저장
-        private string op;
+        /*        // 연산기호 저장
+                private string op;*/
 
         // 계산식
         private string expression = "";
@@ -29,18 +29,17 @@ namespace CalMvvm
             }
             set
             {
-/*                // 연산자가 없는 상태일 경우
-                if (expression == "")
-                {
-                    expression = result;
-                }
-                else*/
+                /*                // 연산자가 없는 상태일 경우
+                                if (expression == "")
+                                {
+                                    expression = result;
+                                }
+                                else*/
                 if (value != expression)
                 {
                     expression = value;
                     OnPropertyChanged(nameof(Expression));
                 }
-
                 // 연산자 계산식에 추가 후 결과창 0으로 세팅
 
             }
@@ -62,12 +61,23 @@ namespace CalMvvm
             }
             set
             {
-                if (value != result)
+                result = value;
+                OnPropertyChanged(nameof(Result));
+                /*if (value != result)
                 {
                     result = value;
                     OnPropertyChanged(nameof(Result));
-                }
+                }*/
             }
+        }
+
+        public SetExpression SetExpress = new SetExpression();
+
+        // 연산자 입력 시 변수만 추가
+        public void AddValue(string var2)
+        {
+            SetExpress.ExpNum.Add(NumberFormat.SetFormat(var2));
+            SetExpress.index++;
         }
 
         // 숫자 클릭
@@ -76,9 +86,12 @@ namespace CalMvvm
             Button btn = sender as Button;
             var insertNum = btn.Content.ToString();
 
-            if (op != null)
+            // 계산 후 새로운 값 입력 시 기존 식 제거
+            if (expression.Contains("="))
             {
-                Result = "0";
+                result = "0";
+                expression = "";
+                OnPropertyChanged(nameof(Expression));
             }
 
             Result = Variable.ChkNum(result, insertNum);
@@ -88,12 +101,18 @@ namespace CalMvvm
         public void Button_Basic(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            op = btn.Content.ToString();
+            string op = btn.Content.ToString();
 
             // Expression = OnPropertyChanged(nameof(Expression));
 
-            BasicOperation.SaveValue(result, op);
-            Expression = BasicOperation.SetExpression();
+            /*BasicOperation.SaveValue(result, op, ref SetExpress.ExpNum, ref SetExpress.ExpOp, ref SetExpress.index);
+            Expression = BasicOperation.SetExpression(SetExpress.index, SetExpress.ExpNum, ref SetExpress.ExpOp);*/
+
+            SetExpress.SaveValue(result, op);
+            Expression = SetExpress.Expression();
+
+            // 사칙연산 클릭 후 입력창 0으로 세팅
+            result = "0";
         }
 
         // 연산자(=) 클릭
@@ -101,11 +120,51 @@ namespace CalMvvm
         {
             Button btn = sender as Button;
             string var2 = result.ToString();
+            // 연산자 클릭 시 계산식에 변수만 추가
+            AddValue(var2);
+            Result = BasicOperation.Result(var2, ref SetExpress.ExpNum, ref SetExpress.ExpOp, ref SetExpress.index);
+            /*Expression = BasicOperation.SetExpression(SetExpress.index, SetExpress.ExpNum, ref SetExpress.ExpOp);*/
 
-            
-            // 입력값(result)를 넘겨준다
-            Result = BasicOperation.Result(var2);
-            Expression = BasicOperation.SetExpression();
-        } 
+            Expression = SetExpress.Expression();
+
+            SetExpress.SetClear();
+        }
+
+        // 지우기 버튼 클릭
+        public void Button_Clear(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            string clear = btn.Content.ToString();
+
+            // 입력창 지우기
+            Result = Clear.ResultClear(clear, result);
+
+            // 계산식 지우기
+            Expression = Clear.ExpressionClear(clear, expression);
+            SetExpress.SetClear();
+        }
+
+        // 특수연산 
+        public void Button_Special(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            string special = btn.Content.ToString();
+            string insertNum = result;
+
+            SetExpress.SaveValue(result, special);
+
+            Result = SpecialOperation.SpecialResult(special, insertNum, ref SetExpress.ExpNum, ref SetExpress.ExpOp);
+            Expression = SetExpress.Expression();
+            /*Result = SpecialOperation.SpecialResult(special, insertNum);*/
+        }
+
+        // ± 클릭시
+        public void Button_Special2(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            string insertNum = result;
+
+            Result = SpecialOperation.ChangeSign(insertNum);
+        }
     }
 }

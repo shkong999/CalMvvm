@@ -10,28 +10,6 @@ namespace CalMvvm.Model
 {
     public class Variable
     {
-        // 숫자 쉼표 표시
-        public static string NumberFormat(string beforeNum)
-        {
-            string[] dotNum;
-            String afterNum;
-
-            // 소수점이 있을 경우 앞/뒤로 자른 후 앞부분에 쉼표 표시 후 소수점 뒷자리와 합침
-            if (beforeNum.Contains("."))
-            {
-                dotNum = beforeNum.Split(".");
-                beforeNum = dotNum[0].ToString();
-                afterNum = String.Format("{0:#,##0}", Double.Parse(beforeNum));
-                afterNum = afterNum + "." + dotNum[1].ToString();
-            }
-            else
-            {
-                afterNum = String.Format("{0:#,##0}", Double.Parse(beforeNum));
-            }
-
-            return afterNum;
-        }
-        
         /* 숫자 입력할 경우 입력창 표시 체크 
         * firstNum > 기존 값
         * insertNum > 새로 입력한 값
@@ -57,7 +35,7 @@ namespace CalMvvm.Model
                 firstNum += insertNum;
             }
 
-            return NumberFormat(firstNum);
+            return NumberFormat.SetFormat(firstNum);
         }
     }
 }
