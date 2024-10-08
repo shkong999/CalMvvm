@@ -12,13 +12,18 @@ namespace CalMvvm.Model
         // 결과값 계산
         public static string Result(string var2, ref List<string> saveNum, ref List<string> saveOp, ref int index)
         {
-
+            string result = "";
             // 먼저 곱셈과 나눗셈 처리
             for (int i = 0; i < saveOp.Count; i++)
             {
                 if (saveOp[i] == "×" || saveOp[i] == "÷")
                 {
-                    string result = PerformOperation(saveNum[i], saveNum[i + 1], saveOp[i]);
+                    if (saveNum[i + 1] == "0")
+                    {
+                        result = "0으로 나눌 수 없습니다";
+                        return result;
+                    }
+                    result = PerformOperation(saveNum[i], saveNum[i + 1], saveOp[i]);
                     saveNum[i] = result.ToString(); 
                     saveNum.RemoveAt(i + 1);
                     saveOp.RemoveAt(i);
@@ -59,11 +64,11 @@ namespace CalMvvm.Model
                     result = (number1 * number2).ToString();
                     break;
                 case "÷":
-                    if (number2 == 0)
+/*                    if (number2 == 0)
                     {
                         result = "0으로 나눌 수 없습니다";
                         break;
-                    }
+                    }*/
                     result = (number1 / number2).ToString();
                     break;
             }

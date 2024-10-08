@@ -8,8 +8,8 @@ namespace CalMvvm.Model
 {
     public class SetExpression
     {
-        public List<string> ExpNum = new List<string>();
-        public List<string> ExpOp = new List<string>();
+        public List<string> expNum = new List<string>();
+        public List<string> expOp = new List<string>();
         public int index = 0;
 
         /* 대상 값 저장
@@ -18,8 +18,8 @@ namespace CalMvvm.Model
          */
         public void SaveValue(string var1, string op)
         {
-            ExpNum.Add(var1);
-            ExpOp.Add(op);
+            expNum.Add(var1);
+            expOp.Add(op);
             index++;
         }
 
@@ -34,17 +34,17 @@ namespace CalMvvm.Model
                     // 첫번째 항목이 아닐 경우 항목 사이 공백 추가
                     expression.Append(" ");
                 }
-                if (ExpNum.Count != ExpOp.Count)
+                if (expNum.Count != expOp.Count)
                 {
-                    ExpOp.Add("=");
+                    expOp.Add("=");
                 }
-                if(ExpOp[i] == "√")
+                if(expOp[i] == "√")
                 {
-                    expression.Append($"{ExpOp[i]} {ExpNum[i]}");
+                    expression.Append($"{expOp[i]} {expNum[i]}");
                 }
                 else
                 {
-                    expression.Append($"{ExpNum[i]} {ExpOp[i]}");
+                    expression.Append($"{expNum[i]} {expOp[i]}");
                 }
             }
             return expression.ToString();
@@ -53,15 +53,15 @@ namespace CalMvvm.Model
         // 계산 완료 후 리스트 저장 값 지우기
         public void SetClear()
         {
-            ExpNum.Clear();
-            ExpOp.Clear();
+            expNum.Clear();
+            expOp.Clear();
             index = 0;
         }
 
         // 결과값 도출 이전 변수만 저장
         public void AddValue(string var2)
         {
-            ExpNum.Add(NumberFormat.SetFormat(var2));
+            expNum.Add(NumberFormat.SetFormat(var2));
             index++;
         }
     }

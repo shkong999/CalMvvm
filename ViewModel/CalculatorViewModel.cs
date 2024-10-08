@@ -1,4 +1,5 @@
 ﻿using CalMvvm.Model;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
@@ -63,9 +64,11 @@ namespace CalMvvm
             Button btn = sender as Button;
             var insertNum = btn.Content.ToString();
 
+            var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
+
             // 계산 후 새로운 값 입력 시 기존 식 제거
-            if (expression.Contains("="))
-            /*if(SetExpress.ExpOp.Count == 0 || expression.Contains("="))*/
+            if (expression != "" && (expression.Contains("=") 
+                || !chkOperator.Contains(expression.Substring(expression.Length - 1))) )
             {
                 result = "0";
                 expression = "";
@@ -96,7 +99,7 @@ namespace CalMvvm
 
             SetExpress.AddValue(var2);
             Expression = SetExpress.Expression();
-            Result = BasicOperation.Result(var2, ref SetExpress.ExpNum, ref SetExpress.ExpOp, ref SetExpress.index);
+            Result = BasicOperation.Result(var2, ref SetExpress.expNum, ref SetExpress.expOp, ref SetExpress.index);
 
             SetExpress.SetClear();
         }
@@ -106,13 +109,36 @@ namespace CalMvvm
         {
             Button btn = sender as Button;
             string clear = btn.Content.ToString();
+            string var = result.ToString();
 
-            Result = Clear.ResultClear(clear, result,expression);
-            Expression = Clear.ExpressionClear(clear, expression);
-
-            if(!expression.Contains("="))
+            var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
+            if (expression != "")
             {
-                SetExpress.SetClear();
+                if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
+                {
+                    Result = Clear.ResultClear(clear, var, expression);
+                    Expression = Clear.ExpressionClear(clear, expression);
+
+                    if (!expression.Contains("="))
+                    {
+                        SetExpress.SetClear();
+                    }
+                }
+                else if (expression.Substring(expression.Length - 1) == "=")
+                {
+                    Expression = "";
+                }
+            }
+            else
+            {
+                if (var.Length == 1 || var == "0")
+                {
+                    Result = "0";
+                }
+                else
+                {
+                    Result = result.Remove(var.Length - 1);
+                }
             }
         }
 
@@ -124,7 +150,7 @@ namespace CalMvvm
             string insertNum = result;
 
             SetExpress.SaveValue(result, special);
-            Result = SpecialOperation.SpecialResult(special, insertNum, ref SetExpress.ExpNum, ref SetExpress.ExpOp);
+            Result = SpecialOperation.SpecialResult(special, insertNum, ref SetExpress.expNum, ref SetExpress.expOp);
             Expression = SetExpress.Expression();
             SetExpress.SetClear();
         }
