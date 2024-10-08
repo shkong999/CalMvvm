@@ -8,12 +8,17 @@ namespace CalMvvm.Model
 {
     class SpecialOperation
     {
+
         public static string SpecialResult(string special, string var, ref List<string> saveNum, ref List<string> saveOp)
         {
             string result = SpecialOp(ref saveNum, ref saveOp);
             return result;
         }
 
+        /* 특수연산 계산
+         * saveNum > 입력값
+         * saveOp > 연산자
+         */
         private static string SpecialOp(ref List<string> saveNum, ref List<string> saveOp)
         {
             double result = 0;
@@ -37,12 +42,13 @@ namespace CalMvvm.Model
                 else if (saveOp[i] == "1/x")
                 {
                     result = (double.Parse(saveNum[i])) / 100;
-                    saveOp[i] = "/";
+                    saveOp[i] = "/ 100";
                 }
             }
             return NumberFormat.SetFormat(result.ToString());
         }
 
+        // ± 계산
         public static string ChangeSign(string var)
         {
             double changeSign = -double.Parse(var);

@@ -7,7 +7,7 @@
         x:Class="CalMvvm.CalculatorView"
         mc:Ignorable="d"
         Title="계산기" Height="580" MinHeight="500"
-                       Width="400" MinWidth="300">
+                       Width="440" MinWidth="440">
     <DockPanel LastChildFill="True">
         <!-- 결과창 -->
         <Grid Height="100" DockPanel.Dock="Top" Background="WhiteSmoke">

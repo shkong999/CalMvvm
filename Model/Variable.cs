@@ -19,8 +19,15 @@ namespace CalMvvm.Model
             // 초기상태일 경우
             if(firstNum == "0")
             {
-                firstNum = insertNum;
-            } 
+                if(insertNum == ".")
+                {
+                    firstNum += insertNum;
+                }
+                else
+                {
+                    firstNum = insertNum;
+                }
+            }
             // 소수점이 있을 경우
             else if(firstNum.Contains("."))
             {

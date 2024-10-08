@@ -1,27 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CalMvvm.Model
+﻿namespace CalMvvm.Model
 {
     class Clear
     {
         // 입력창 지우기
-        public static string ResultClear(string clear, string result)
+        public static string ResultClear(string clear, string result, string expression)
         {
             string removeNum = "0";
-
-            if(clear == "←")
+            if (clear == "←")
             {
-                if (result.Length == 1 || result == "0")
+                if (expression != null)
                 {
-                    removeNum = "0";
+                    if (!expression.Contains("="))
+                    {
+                        if (result.Length == 1 || result == "0")
+                        {
+                            removeNum = "0";
+                        }
+                        else
+                        {
+                            removeNum = result.Remove(result.Length - 1);
+                        }
+                    }
+                    else
+                    {
+                        removeNum = result;
+                    }
                 }
                 else
                 {
-                    removeNum = result.Remove(result.Length - 1);
+                    if (result.Length == 1 || result == "0")
+                    {
+                        removeNum = "0";
+                    }
+                    else
+                    {
+                        removeNum = result.Remove(result.Length - 1);
+                    }
                 }
             }
             else
@@ -35,10 +49,10 @@ namespace CalMvvm.Model
         public static string ExpressionClear(string clear, string expression)
         {
             string removeExp = "";
-            switch(clear)
+            switch (clear)
             {
                 case "←":
-                    if (expression.Contains("=") || expression != null)
+                    if (expression.Contains("="))
                     {
                         removeExp = "";
                         break;
@@ -51,10 +65,18 @@ namespace CalMvvm.Model
                     removeExp = "";
                     break;
                 case "CE":
-                    removeExp = expression;
-                    break;
+                    if (!expression.Contains("="))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        removeExp = "";
+                        break;
+                    }
             }
             return removeExp;
         }
+
     }
 }

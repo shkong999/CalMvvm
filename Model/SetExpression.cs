@@ -12,7 +12,7 @@ namespace CalMvvm.Model
         public List<string> ExpOp = new List<string>();
         public int index = 0;
 
-        /* 사칙연산 대상 값 저장
+        /* 대상 값 저장
          * var1 > 연산자 이전 입력값
          * op > 연산자
          */
@@ -23,7 +23,7 @@ namespace CalMvvm.Model
             index++;
         }
 
-        // 식 세팅
+        // 연산식 세팅
         public string Expression()
         {
             StringBuilder expression = new StringBuilder();
@@ -38,14 +38,19 @@ namespace CalMvvm.Model
                 {
                     ExpOp.Add("=");
                 }
-
-                expression.Append($"{ExpNum[i]} {ExpOp[i]}");
-
+                if(ExpOp[i] == "√")
+                {
+                    expression.Append($"{ExpOp[i]} {ExpNum[i]}");
+                }
+                else
+                {
+                    expression.Append($"{ExpNum[i]} {ExpOp[i]}");
+                }
             }
             return expression.ToString();
         }
 
-        // 리스트 저장 값 지우기
+        // 계산 완료 후 리스트 저장 값 지우기
         public void SetClear()
         {
             ExpNum.Clear();
@@ -53,6 +58,7 @@ namespace CalMvvm.Model
             index = 0;
         }
 
+        // 결과값 도출 이전 변수만 저장
         public void AddValue(string var2)
         {
             ExpNum.Add(NumberFormat.SetFormat(var2));
