@@ -6,54 +6,64 @@ using System.Threading.Tasks;
 
 namespace CalMvvm.Model
 {
-    class SpecialOperation
+    public class SpecialOperation : BasicOperation
     {
-
-        public static string SpecialResult(string special, string var, ref List<string> saveNum, ref List<string> saveOp)
+        // 결과값 계산
+        public string SpecialResult(ref List<string> saveNum, ref List<string> saveOp)
         {
-            string result = SpecialOp(ref saveNum, ref saveOp);
-            return result;
-        }
-
-        /* 특수연산 계산
-         * saveNum > 입력값
-         * saveOp > 연산자
-         */
-        private static string SpecialOp(ref List<string> saveNum, ref List<string> saveOp)
-        {
-            decimal result = 0;
+            string finalResult = "";
             for (int i = 0; i < saveOp.Count; i++)
             {
-                Decimal num = decimal.Parse(saveNum[i]);
                 if (saveOp[i] == "%")
                 {
-                    /*result = (double.Parse(saveNum[i - 1])) * (double.Parse(saveNum[i])) / 100;*/
-                    result = num / 100;
+                    finalResult = PerformOperation(saveNum[i], "100", saveOp[i]);
                     saveOp[i] = "%";
                 }
-                else if(saveOp[i] == "√")
+                else if (saveOp[i] == "%")
                 {
-                    result = (decimal)Math.Sqrt((double)num);
+                    finalResult = PerformOperation(saveNum[i], saveNum[i], saveOp[i]);
                 }
                 else if (saveOp[i] == "x²")
                 {
-                    result = (decimal)Math.Pow((double)num, 2);
+                    finalResult = PerformOperation(saveNum[i], saveNum[i], saveOp[i]);
                     saveOp[i] = "²";
                 }
                 else if (saveOp[i] == "1/x")
                 {
-                    result = num / 100;
+                    finalResult = PerformOperation(saveNum[i], "100", saveOp[i]);
                     saveOp[i] = "/ 100";
                 }
             }
-            return NumberFormat.SetFormat(result.ToString());
+
+            return NumberFormat.SetFormat(finalResult);
         }
 
         // ± 계산
-        public static string ChangeSign(string var)
+        public string ChangeSign(string var)
         {
             double changeSign = -double.Parse(var);
             return NumberFormat.SetFormat(changeSign.ToString());
+        }
+
+
+        public string PerformOperation(string num1, string num2, string op)
+        {
+            Decimal num = decimal.Parse(num1);
+            Decimal result = 0;
+            if (op == "%" || op == "1 / x")
+            {
+                result = num / 100;
+            }
+            else if (op == "√")
+            {
+                result = (decimal)Math.Sqrt((double)num);
+            }
+            else if(op == "x²")
+            {
+                result = (decimal)Math.Pow((double)num, 2);
+            }
+
+            return result.ToString();
         }
     }
 }

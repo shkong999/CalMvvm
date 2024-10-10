@@ -57,6 +57,8 @@ namespace CalMvvm
         }
 
         public SetExpression SetExpress = new SetExpression();
+        public SpecialOperation specialOperation = new SpecialOperation();
+        public BasicOperation basicOperation = new BasicOperation();
 
         // 숫자 클릭
         public void Button_Click(object sender, RoutedEventArgs e)
@@ -99,7 +101,7 @@ namespace CalMvvm
 
             SetExpress.AddValue(var2);
             Expression = SetExpress.Expression();
-            Result = BasicOperation.Result(var2, ref SetExpress.expNum, ref SetExpress.expOp, ref SetExpress.index);
+            Result = basicOperation.Result(ref SetExpress.expNum, ref SetExpress.expOp);
 
             SetExpress.SetClear();
         }
@@ -112,7 +114,6 @@ namespace CalMvvm
             string var = result.ToString();
 
             var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
-
 
             if (clear == "←")
             {
@@ -169,6 +170,7 @@ namespace CalMvvm
                         Result = Clear.ResultClear(clear, var, expression);
                         Expression = Clear.ExpressionClear(clear, expression);
                     }
+                    
                 }
                 else
                 {
@@ -185,7 +187,7 @@ namespace CalMvvm
             string insertNum = result;
 
             SetExpress.SaveValue(result, special);
-            Result = SpecialOperation.SpecialResult(special, insertNum, ref SetExpress.expNum, ref SetExpress.expOp);
+            Result = specialOperation.SpecialResult(ref SetExpress.expNum, ref SetExpress.expOp);
             Expression = SetExpress.Expression();
             SetExpress.SetClear();
         }
@@ -196,7 +198,7 @@ namespace CalMvvm
             Button btn = sender as Button;
             string insertNum = result;
 
-            Result = SpecialOperation.ChangeSign(insertNum);
+            Result = specialOperation.ChangeSign(insertNum);
         }
     }
 }

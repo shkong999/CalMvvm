@@ -10,7 +10,7 @@ namespace CalMvvm.Model
     public class BasicOperation
     {
         // 결과값 계산
-        public static string Result(string var2, ref List<string> saveNum, ref List<string> saveOp, ref int index)
+        public string Result(ref List<string> saveNum, ref List<string> saveOp)
         {
             string result = "";
             // 먼저 곱셈과 나눗셈 처리
@@ -24,6 +24,14 @@ namespace CalMvvm.Model
                         {
                             result = "0으로 나눌 수 없습니다";
                             return result;
+                        }
+                        else
+                        {
+                            result = PerformOperation(saveNum[i], saveNum[i + 1], saveOp[i]);
+                            saveNum[i] = result.ToString();
+                            saveNum.RemoveAt(i + 1);
+                            saveOp.RemoveAt(i);
+                            i--;
                         }
                     }
                     else
@@ -52,7 +60,7 @@ namespace CalMvvm.Model
         }
 
 
-        private static string PerformOperation(string num1, string num2, string op)
+        public string PerformOperation(string num1, string num2, string op)
         {
             double number1 = double.Parse(num1);
             double number2 = double.Parse(num2);
@@ -70,11 +78,6 @@ namespace CalMvvm.Model
                     result = (number1 * number2).ToString();
                     break;
                 case "÷":
-                    /*if (number2 == 0)
-                    {
-                        result = "0으로 나눌 수 없습니다";
-                        break;
-                    }*/
                     result = (number1 / number2).ToString();
                     break;
             }
