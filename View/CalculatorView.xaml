@@ -30,6 +30,7 @@
             </TextBox>
         </Grid>
         <!-- 메모리 -->
+        <!--
         <Grid DockPanel.Dock="Top"
               Height="50">
             <Grid.ColumnDefinitions>
@@ -74,7 +75,8 @@
                     BorderThickness="0"
                     Background="WhiteSmoke"
                     x:Name="btnMs"/>
-        </Grid>
+        </Grid> 
+        -->
         <!-- 버튼 -->
         <Grid>
             <Grid.ColumnDefinitions>

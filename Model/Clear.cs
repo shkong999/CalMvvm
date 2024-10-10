@@ -119,6 +119,7 @@ namespace CalMvvm.Model
                 case "CE":
                     if (!expression.Contains("="))
                     {
+                        removeExp = expression;
                         break;
                     }
                     else

@@ -18,16 +18,22 @@ namespace CalMvvm.Model
             {
                 if (saveOp[i] == "×" || saveOp[i] == "÷")
                 {
-                    if (saveNum[i + 1] == "0")
+                    if (saveOp[i] == "÷")
                     {
-                        result = "0으로 나눌 수 없습니다";
-                        return result;
+                        if (saveNum[i + 1] == "0")
+                        {
+                            result = "0으로 나눌 수 없습니다";
+                            return result;
+                        }
                     }
-                    result = PerformOperation(saveNum[i], saveNum[i + 1], saveOp[i]);
-                    saveNum[i] = result.ToString(); 
-                    saveNum.RemoveAt(i + 1);
-                    saveOp.RemoveAt(i);
-                    i--; 
+                    else
+                    {
+                        result = PerformOperation(saveNum[i], saveNum[i + 1], saveOp[i]);
+                        saveNum[i] = result.ToString();
+                        saveNum.RemoveAt(i + 1);
+                        saveOp.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
 
@@ -64,7 +70,7 @@ namespace CalMvvm.Model
                     result = (number1 * number2).ToString();
                     break;
                 case "÷":
-/*                    if (number2 == 0)
+                    /*if (number2 == 0)
                     {
                         result = "0으로 나눌 수 없습니다";
                         break;

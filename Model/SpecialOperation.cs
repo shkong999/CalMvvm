@@ -21,27 +21,28 @@ namespace CalMvvm.Model
          */
         private static string SpecialOp(ref List<string> saveNum, ref List<string> saveOp)
         {
-            double result = 0;
+            decimal result = 0;
             for (int i = 0; i < saveOp.Count; i++)
             {
+                Decimal num = decimal.Parse(saveNum[i]);
                 if (saveOp[i] == "%")
                 {
                     /*result = (double.Parse(saveNum[i - 1])) * (double.Parse(saveNum[i])) / 100;*/
-                    result = (double.Parse(saveNum[i])) / 100;
+                    result = num / 100;
                     saveOp[i] = "%";
                 }
                 else if(saveOp[i] == "√")
                 {
-                    result = Math.Sqrt(double.Parse(saveNum[i]));
+                    result = (decimal)Math.Sqrt((double)num);
                 }
                 else if (saveOp[i] == "x²")
                 {
-                    result = Math.Pow(double.Parse(saveNum[i]), 2);
+                    result = (decimal)Math.Pow((double)num, 2);
                     saveOp[i] = "²";
                 }
                 else if (saveOp[i] == "1/x")
                 {
-                    result = (double.Parse(saveNum[i])) / 100;
+                    result = num / 100;
                     saveOp[i] = "/ 100";
                 }
             }

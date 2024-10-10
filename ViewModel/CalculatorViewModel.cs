@@ -112,32 +112,67 @@ namespace CalMvvm
             string var = result.ToString();
 
             var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
-            if (expression != "")
-            {
-                if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
-                {
-                    Result = Clear.ResultClear(clear, var, expression);
-                    Expression = Clear.ExpressionClear(clear, expression);
 
-                    if (!expression.Contains("="))
-                    {
-                        SetExpress.SetClear();
-                    }
-                }
-                else if (expression.Substring(expression.Length - 1) == "=")
-                {
-                    Expression = "";
-                }
-            }
-            else
+
+            if (clear == "←")
             {
-                if (var.Length == 1 || var == "0")
+                if (expression != "")
                 {
-                    Result = "0";
+                    if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
+                    {
+                        Result = Clear.ResultClear(clear, var, expression);
+                        Expression = Clear.ExpressionClear(clear, expression);
+
+                        if (!expression.Contains("="))
+                        {
+                            SetExpress.SetClear();
+                        }
+                    }
+                    else if (expression.Substring(expression.Length - 1) == "=")
+                    {
+                        Expression = "";
+                    }
                 }
                 else
                 {
-                    Result = result.Remove(var.Length - 1);
+                    if (var.Length == 1 || var == "0")
+                    {
+                        Result = "0";
+                    }
+                    else
+                    {
+                        Result = result.Remove(var.Length - 1);
+                    }
+                }
+            }
+            else if (clear == "C")
+            {
+                Result = Clear.ResultClear(clear, var, expression);
+                Expression = Clear.ExpressionClear(clear, expression);
+            }
+            else if (clear == "CE")
+            {
+                if (expression != "")
+                {
+                    if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
+                    {
+                        Result = Clear.ResultClear(clear, var, expression);
+                        Expression = Clear.ExpressionClear(clear, expression);
+
+                        if (!expression.Contains("="))
+                        {
+                            SetExpress.SetClear();
+                        }
+                    }
+                    else
+                    {
+                        Result = Clear.ResultClear(clear, var, expression);
+                        Expression = Clear.ExpressionClear(clear, expression);
+                    }
+                }
+                else
+                {
+                    Result = "0";
                 }
             }
         }
