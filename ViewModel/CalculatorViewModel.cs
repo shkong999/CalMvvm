@@ -1,10 +1,13 @@
 ﻿using CalMvvm.Model;
+using CalMvvm.View;
+using CalMvvm.ViewModel;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace CalMvvm
 {
@@ -16,6 +19,9 @@ namespace CalMvvm
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+        public HistoryViewModel HistoryVM;
+        public HistoryView History;
 
         // 계산식
         private string expression = "";
@@ -56,9 +62,38 @@ namespace CalMvvm
             }
         }
 
+        private Frame historyFrame = new Frame();
+        public Frame HistoryFrame
+        {
+            get => historyFrame;
+            set
+            {
+                historyFrame = value;
+                OnPropertyChanged(nameof(HistoryFrame));
+            }
+        }
+
+        // 처음 화면 오픈 시 History 화면 안열리게함
+        private Visibility historyVisibility = Visibility.Hidden;
+        public Visibility HistoryVisibility
+        {
+            get => historyVisibility;
+            set
+            {
+                historyVisibility = value;
+                OnPropertyChanged(nameof(HistoryVisibility));
+            }
+        }
+
         public SetExpression SetExpress = new SetExpression();
         public SpecialOperation specialOperation = new SpecialOperation();
         public BasicOperation basicOperation = new BasicOperation();
+
+        public CalculatorViewModel()
+        {
+            HistoryVM = new HistoryViewModel();
+            History = new HistoryView() { DataContext = HistoryVM };
+        }
 
         // 숫자 클릭
         public void Button_Click(object sender, RoutedEventArgs e)
@@ -102,6 +137,9 @@ namespace CalMvvm
             Expression = SetExpress.Expression();
             Result = basicOperation.Result(ref SetExpress.expNum, ref SetExpress.expOp);
 
+            // History에 식 추가
+            HistoryVM.ExpHistory.Add(Expression + "\n" + Result);
+
             SetExpress.SetClear();
         }
 
@@ -141,6 +179,20 @@ namespace CalMvvm
             string insertNum = result;
 
             Result = specialOperation.ChangeSign(insertNum);
+        }
+
+        // History 버튼 클릭 시
+        public void Button_History(object sender, RoutedEventArgs e)
+        {
+            if (HistoryVisibility == Visibility.Visible)
+            {
+                HistoryVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                HistoryFrame.Navigate(History);
+                HistoryVisibility = Visibility.Visible;
+            }
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿<Page x:Class="CalMvvm.View.HistoryView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CalMvvm.View"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HistoryView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Background="White" Grid.Row="0" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Clear" Width="100" Margin="5">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="History_Clear"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Border>
+        <ScrollViewer Grid.Row="1">
+            <ListBox ItemsSource="{Binding ExpHistory}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" Margin="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+    </Grid>
+</Page>
