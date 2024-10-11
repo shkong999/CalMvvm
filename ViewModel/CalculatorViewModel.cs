@@ -65,7 +65,6 @@ namespace CalMvvm
         {
             Button btn = sender as Button;
             var insertNum = btn.Content.ToString();
-
             var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
 
             // 계산 후 새로운 값 입력 시 기존 식 제거
@@ -113,70 +112,13 @@ namespace CalMvvm
             string clear = btn.Content.ToString();
             string var = result.ToString();
 
-            var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
-
-            if (clear == "←")
+            if (expression != "" && !(expression.Substring(expression.Length - 1) == "="))
             {
-                if (expression != "")
-                {
-                    if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
-                    {
-                        Result = Clear.ResultClear(clear, var, expression);
-                        Expression = Clear.ExpressionClear(clear, expression);
+                SetExpress.SetClear();
+            }
 
-                        if (!expression.Contains("="))
-                        {
-                            SetExpress.SetClear();
-                        }
-                    }
-                    else if (expression.Substring(expression.Length - 1) == "=")
-                    {
-                        Expression = "";
-                    }
-                }
-                else
-                {
-                    if (var.Length == 1 || var == "0")
-                    {
-                        Result = "0";
-                    }
-                    else
-                    {
-                        Result = result.Remove(var.Length - 1);
-                    }
-                }
-            }
-            else if (clear == "C")
-            {
-                Result = Clear.ResultClear(clear, var, expression);
-                Expression = Clear.ExpressionClear(clear, expression);
-            }
-            else if (clear == "CE")
-            {
-                if (expression != "")
-                {
-                    if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
-                    {
-                        Result = Clear.ResultClear(clear, var, expression);
-                        Expression = Clear.ExpressionClear(clear, expression);
-
-                        if (!expression.Contains("="))
-                        {
-                            SetExpress.SetClear();
-                        }
-                    }
-                    else
-                    {
-                        Result = Clear.ResultClear(clear, var, expression);
-                        Expression = Clear.ExpressionClear(clear, expression);
-                    }
-                    
-                }
-                else
-                {
-                    Result = "0";
-                }
-            }
+            Result = Clear.ResultClear(clear, var, expression);
+            Expression = Clear.ExpressionClear(clear, expression);
         }
 
         // 특수연산 

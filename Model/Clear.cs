@@ -10,72 +10,65 @@ namespace CalMvvm.Model
             string removeNum = "0";
             var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
 
+            /*removeNum = result;*/
+
             if (clear == "←")
             {
-                removeNum = result;
-                //if(expression != "")
-                //{
-                //    // 계산이 끝나지 않았을 경우
-                //    if (chkOperator.Contains(expression.Substring(expression.Length - 1)))
-                //    {
-                //        if (result.Length == 1 || result == "0")
-                //        {
-                //            removeNum = "0";
-                //        }
-                //        else
-                //        {
-                //            removeNum = result.Remove(result.Length - 1);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        removeNum = result;
-                //    }
-                //}
-                //else
-                //{
-                //    if (result.Length == 1 || result == "0")
-                //    {
-                //        removeNum = "0";
-                //    }
-                //    else
-                //    {
-                //        removeNum = result.Remove(result.Length - 1);
-                //    }
-                //}
-                ///*if (expression != null)
-                //{
-                //    if (!expression.Contains("="))
-                //    {
-                //        if (result.Length == 0 || result == "0")
-                //        {
-                //            removeNum = "0";
-                //        }
-                //        else
-                //        {
-                //            removeNum = result.Remove(result.Length - 1);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        removeNum = result;
-                //    }
-                //}
-                //else
-                //{
-                //    if (result.Length == 1 || result == "0")
-                //    {
-                //        removeNum = "0";
-                //    }
-                //    else
-                //    {
-                //        removeNum = result.Remove(result.Length - 1);
-                //    }
-                //}*/
+                // 계산식이 있을때
+                if (expression != "")
+                {
+                    // 사칙연산으로 끝나지 않을때 (결과값 입력 후 / 특수연산 입력후 / = 으로 끝날때 )
+                    if (!chkOperator.Contains(expression.Substring(expression.Length - 1)))
+                    {
+                        removeNum = result;
+                    }
+                    //  사칙연산으로 끝날때
+                    else
+                    /*else if (expression.Substring(expression.Length - 1) == "=")*/
+                    {
+                        // 숫자만 있을때
+                        if (result.Length == 1 || result == "0")
+                        {
+                            removeNum = "0";
+                        }
+                        else
+                        {
+                            removeNum = result.Remove(result.Length - 1);
+                        }
+                    }
+                }
+                else
+                {
+                    // 숫자만 있을때
+                    if (result.Length == 1 || result == "0")
+                    {
+                        removeNum = "0";
+                    }
+                    else
+                    {
+                        removeNum = result.Remove(result.Length - 1);
+                    }
+
+                }
             }
-            else
+            else if (clear == "C")
             {
-                removeNum = "0";
+                removeNum = "";
+            }
+            else if (clear == "CE")
+            {
+                // 계산식이 있고
+                if (expression != "")
+                {
+                    /* 사칙연산으로 끝나지 않거나 = 으로 끝나지 않을때 
+                    * => 특수연산일때
+                    */
+                    if (!chkOperator.Contains(expression.Substring(expression.Length - 1))
+                        || !(expression.Substring(expression.Length - 1) == "="))
+                    {
+                        removeNum = "0";
+                    }
+                }
             }
             return NumberFormat.SetFormat(removeNum);
         }
@@ -87,21 +80,49 @@ namespace CalMvvm.Model
             var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
 
             if(clear == "←")
-            {
+            {   
+                // 식이 있을때
                 if(expression != "")
                 {
+                    // 사칙연산 후
                     if (chkOperator.Contains(expression.Substring(expression.Length - 1)))
+                    {
+                        removeExp = expression;
+                    }
+                    // = / 특수연산 후
+                    else
                     {
                         removeExp = "";
                     }
                 }
+                // 식이 없을때(숫자만 있을때)
                 else
                 {
                     removeExp = expression;
                 }
             }
-            
-            switch (clear)
+            else if (clear == "C")
+            {
+                removeExp = "";
+            }
+            else if (clear == "CE")
+            {
+                // 계산식이 있고
+                if (expression != "")
+                {
+                    // 사칙연산으로 끝나거나 = 으로 끝나지 않을때(특수연산일때) 
+                    if (chkOperator.Contains(expression.Substring(expression.Length - 1))
+                        || !(expression.Substring(expression.Length - 1) == "="))
+                     {
+                        removeExp = expression;
+                    }
+                    else
+                    {
+                        removeExp = "";
+                    }
+                }
+            }
+            /* switch (clear)
             {
                 case "←":
                     if (expression.Contains("="))
@@ -127,9 +148,9 @@ namespace CalMvvm.Model
                         removeExp = "";
                         break;
                     }
-            }
+            }*/
+           
             return removeExp;
         }
-
     }
 }
