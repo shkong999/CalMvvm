@@ -23,9 +23,7 @@ namespace CalMvvm
     {
         public CalculatorView()
         {
-
             InitializeComponent();
-
             DataContext = new CalculatorViewModel();
         }
     }

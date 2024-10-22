@@ -14,35 +14,43 @@ namespace CalMvvm
 {
     public class CalculatorViewModel : OnPropertyChange
     {
+        // 필드
         public HistoryViewModel HistoryVM;
         public HistoryView History;
+        public Number number;
+        public Calculator calculator;
+        public Clear clear;
 
-        // 계산식
-        private string expression = "";
-        public string Expression
+        // 속성
+        private Frame historyFrame = new Frame();
+        public Frame HistoryFrame
         {
-            get
-            {
-                return expression;
-            }
+            get => historyFrame;
             set
             {
-                if (value != expression)
-                {
-                    expression = value;
-                    OnPropertyChanged(nameof(Expression));
-                }
+                historyFrame = value;
+                OnPropertyChanged(nameof(HistoryFrame));
             }
         }
 
-        // 결과창
-        private string result = "";
+        private string expression;
+        public string Expression
+        {
+            get => expression;
+            set
+            {
+                expression = value;
+                OnPropertyChanged(nameof(Expression));
+            }
+        }
+
+        private string result;
         public string Result
         {
             get
             {
                 // 초기 상태일 때 0으로 세팅
-                if (result == "")
+                if (result == null)
                 {
                     result = "0";
                     return result;
@@ -53,17 +61,6 @@ namespace CalMvvm
             {
                 result = value;
                 OnPropertyChanged(nameof(Result));
-            }
-        }
-
-        private Frame historyFrame = new Frame();
-        public Frame HistoryFrame
-        {
-            get => historyFrame;
-            set
-            {
-                historyFrame = value;
-                OnPropertyChanged(nameof(HistoryFrame));
             }
         }
 
@@ -79,15 +76,108 @@ namespace CalMvvm
             }
         }
 
-        public SetExpression SetExpress = new SetExpression();
-        public SpecialOperation specialOperation = new SpecialOperation();
-        public BasicOperation basicOperation = new BasicOperation();
-
+        // 생성자
         public CalculatorViewModel()
         {
             HistoryVM = new HistoryViewModel();
             History = new HistoryView() { DataContext = HistoryVM };
+            number = new Number();
+            calculator = new Calculator();
+            clear = new Clear();
         }
+
+        // 숫자 클릭
+        public void OnClickNumber(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            var insertNum = btn.Content.ToString();
+            var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
+
+            // 계산 후 새로운 값 입력 시 기존 식 제거
+            if (expression != null && (expression.Contains("=")
+                || !chkOperator.Contains(expression.Substring(expression.Length - 1))))
+            {
+                result = "0";
+                expression = null;
+                OnPropertyChanged(nameof(Expression));
+            }
+
+            Result = number.InputNumber(result, insertNum);
+            /*var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
+
+            // 계산 후 새로운 값 입력 시 기존 식 제거
+            if (expression != "" && (expression.Contains("=")
+                || !chkOperator.Contains(expression.Substring(expression.Length - 1))))
+            {
+                result = "0";
+                expression = "";
+                OnPropertyChanged(nameof(Expression));
+            }
+
+            Result = Variable.ChkNum(result, insertNum);*/
+        }
+
+        // 계산
+        public void OnClickCalculator(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            // 연산자 입력 시 계산식에 추가
+            if(expression == null)
+            {
+                expression = $"{result} {button.Content.ToString()}";
+            }
+            else
+            {
+                expression = $"{expression} {result} {button.Content.ToString()}";
+            }
+
+            result = calculator.Operate(result, button.Content.ToString());
+            Expression = expression;
+            // 결과값(=) 이후엔 어떻게할건지..
+            result = "0";
+        }
+
+        // 지우기
+        public void OnClickClear(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            string sign = button.Content.ToString();
+
+            if (sign == "←")
+            {
+                result = clear.BackSpace("0", result, expression);
+                Expression = clear.BackSpace("1", result, expression);
+            }
+            else if (sign == "CE")
+            {
+                result = clear.ClearDisplay("0", result, expression);
+                Expression = clear.ClearDisplay("1", result, expression);
+            }
+            else if (sign == "C")
+            {
+                Result = clear.ClearAll();
+                Expression = clear.ClearAll();
+            }
+
+            Result = number.NumberFormat(result);
+
+           /* string var = result.ToString();
+
+            if (expression != "" && !(expression.Substring(expression.Length - 1) == "="))
+            {
+                //SetExpress.SetClear();
+            }
+
+            Result = Clear.ResultClear(clear, var, expression);
+            Expression = Clear.ExpressionClear(clear, expression);*/
+        }
+
+        /*
+
+        public SetExpression SetExpress = new SetExpression();
+        public SpecialOperation specialOperation = new SpecialOperation();
+        public BasicOperation basicOperation = new BasicOperation();
 
         // 숫자 클릭
         public void OnClickNumber(object sender, RoutedEventArgs e)
@@ -173,7 +263,7 @@ namespace CalMvvm
             string insertNum = result;
 
             Result = specialOperation.ChangeSign(insertNum);
-        }
+        }*/
 
         // History 버튼 클릭 시
         public void OnClickHistory(object sender, RoutedEventArgs e)
