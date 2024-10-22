@@ -50,7 +50,7 @@ namespace CalMvvm.Model
         {
             Decimal num = decimal.Parse(num1);
             Decimal result = 0;
-            if (op == "%" || op == "1/x")
+            if (op == "%" || op == "1 / x")
             {
                 result = num / 100;
             }
