@@ -46,7 +46,7 @@ namespace CalMvvm.Model
         }
 
 
-        public string PerformOperation(string num1, string num2, string op)
+        public override string PerformOperation(string num1, string num2, string op)
         {
             Decimal num = decimal.Parse(num1);
             Decimal result = 0;

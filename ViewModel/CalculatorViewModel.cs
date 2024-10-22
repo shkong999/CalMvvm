@@ -1,4 +1,5 @@
 ﻿using CalMvvm.Model;
+using CalMvvm.Tools;
 using CalMvvm.View;
 using CalMvvm.ViewModel;
 using System.Collections.Generic;
@@ -11,15 +12,8 @@ using System.Windows.Navigation;
 
 namespace CalMvvm
 {
-    public class CalculatorViewModel : INotifyPropertyChanged
+    public class CalculatorViewModel : OnPropertyChange
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         public HistoryViewModel HistoryVM;
         public HistoryView History;
 
@@ -96,7 +90,7 @@ namespace CalMvvm
         }
 
         // 숫자 클릭
-        public void Button_Click(object sender, RoutedEventArgs e)
+        public void OnClickNumber(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             var insertNum = btn.Content.ToString();
@@ -115,7 +109,7 @@ namespace CalMvvm
         }
 
         // 사칙연산 클릭
-        public void Button_Basic(object sender, RoutedEventArgs e)
+        public void OnClickBasic(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             string op = btn.Content.ToString();
@@ -128,7 +122,7 @@ namespace CalMvvm
         }
 
         // 연산자(=) 클릭
-        public void Button_Result(object sender, RoutedEventArgs e)
+        public void OnClickResult(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             string var2 = result.ToString();
@@ -144,7 +138,7 @@ namespace CalMvvm
         }
 
         // 지우기 버튼 클릭
-        public void Button_Clear(object sender, RoutedEventArgs e)
+        public void OnClickClear(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             string clear = btn.Content.ToString();
@@ -160,7 +154,7 @@ namespace CalMvvm
         }
 
         // 특수연산 
-        public void Button_Special(object sender, RoutedEventArgs e)
+        public void OnClickSpecial(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             string special = btn.Content.ToString();
@@ -173,7 +167,7 @@ namespace CalMvvm
         }
 
         // ± 클릭시
-        public void Button_Special2(object sender, RoutedEventArgs e)
+        public void OnClickSpecial2(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             string insertNum = result;
@@ -182,7 +176,7 @@ namespace CalMvvm
         }
 
         // History 버튼 클릭 시
-        public void Button_History(object sender, RoutedEventArgs e)
+        public void OnClickHistory(object sender, RoutedEventArgs e)
         {
             if (HistoryVisibility == Visibility.Visible)
             {

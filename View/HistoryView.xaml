@@ -18,14 +18,15 @@
                 <Button Content="Clear" Width="100" Margin="5">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="History_Clear"/>
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="ClearHistory"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                 </Button>
             </StackPanel>
         </Border>
         <ScrollViewer Grid.Row="1">
-            <ListBox ItemsSource="{Binding ExpHistory}">
+            <ListBox ItemsSource="{Binding ExpHistory}"
+                     SelectedItem="{Binding SelectedItem}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

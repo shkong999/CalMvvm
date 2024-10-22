@@ -60,7 +60,7 @@ namespace CalMvvm.Model
         }
 
 
-        public string PerformOperation(string num1, string num2, string op)
+        public virtual string PerformOperation(string num1, string num2, string op)
         {
             double number1 = double.Parse(num1);
             double number2 = double.Parse(num2);

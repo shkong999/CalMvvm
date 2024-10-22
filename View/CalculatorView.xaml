@@ -40,7 +40,7 @@
                     Margin="10,10,0,0">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_History"/>
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="OnClickHistory"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                 </Button>
@@ -66,351 +66,202 @@
                     Grid.ColumnSpan="4" Grid.RowSpan="6"
                     Content="{Binding HistoryFrame}" NavigationUIVisibility="Hidden"
                     Visibility="{Binding HistoryVisibility}" Panel.ZIndex="1"/>
-            <Button Grid.Row="0"
-                Grid.Column="0"
-                Margin="2,1,1,1"
-                FontSize="18"
-                BorderThickness="0"
-                Content="%"
-                x:Name="btnPercent">
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnCe" Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="CE">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Clear"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnC" Grid.Row="0"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="C">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Clear"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnRemove" Grid.Row="0"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="←">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Clear"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <!-- 둘째줄 -->
-            <Button x:Name="btnFraction" Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="3,1,0,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="1/x">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnSquare" Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="x²">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnRoute" Grid.Row="1"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="√">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnDivide" Grid.Row="1"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="÷">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <!-- 셋째줄 -->
-            <Button Grid.Row="2"
-                    Grid.Column="0"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="7"
-                    FontWeight="Bold"/>
-            <Button Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="8"
-                    FontWeight="Bold"/>
-            <Button Grid.Row="2"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="9"
-                    FontWeight="Bold"/>
-            <Button Grid.Row="2"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="10"
-                    FontWeight="Bold"/>
-            <!-- 셋째줄 -->
+                <Button Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="%"
+                        x:Name="btnPercent"
+                        Command="{Binding CalculatorCommand}"/>
+                <Button x:Name="btnCe" Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="CE"
+                        Command="{Binding ClearCommand}"/>
+                <Button x:Name="btnC" Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="C"
+                        Command="{Binding ClearCommand}"/>
+                <Button x:Name="btnRemove" Grid.Row="0"
+                        Grid.Column="3"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="←"
+                        Command="{Binding ClearCommand}"/>
+                <!-- 둘째줄 -->
+                <Button x:Name="btnFraction" Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="3,1,0,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="1/x"
+                        Command="{Binding CalculatorCommand}"/>
+                <Button x:Name="btnSquare" Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="x²"
+                        Command="{Binding CalculatorCommand}"/>
+                <Button x:Name="btnRoute" Grid.Row="1"
+                        Grid.Column="2"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="√"
+                        Command="{Binding CalculatorCommand}"/>
+                <Button x:Name="btnDivide" Grid.Row="1"
+                        Grid.Column="3"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="÷"
+                        Command="{Binding CalculatorCommand}"/>
+                <!-- 셋째줄 -->
                 <Button x:Name="btn7" Grid.Row="2"
-                    Grid.Column="0"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="7"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn8" Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="8"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn9" Grid.Row="2"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="9"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnMultiply" Grid.Row="2"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="×">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <!-- 넷째줄 -->
-            <Button x:Name="btn4" Grid.Row="3"
-                    Grid.Column="0"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="4"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn5" Grid.Row="3"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="5"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn6" Grid.Row="3"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="6"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnMinus" Grid.Row="3"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="－">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <!-- 다섯째줄 -->
-            <Button x:Name="btn1" Grid.Row="4"
-                    Grid.Column="0"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="1"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn2" Grid.Row="4"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="2"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn3" Grid.Row="4"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="3"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnPlus" Grid.Row="4"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="+">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Basic"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <!-- 여섯째줄 -->
-            <Button x:Name="btnSign" Grid.Row="5"
-                    Grid.Column="0"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="±">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Special2"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btn0" Grid.Row="5"
-                    Grid.Column="1"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="0"
-                    FontWeight="Bold"
-                    Background="WhiteSmoke">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnPoint" Grid.Row="5"
-                    Grid.Column="2"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="."
-                    FontWeight="Bold">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Click"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnResult" Grid.Row="5"
-                    Grid.Column="3"
-                    Margin="2,1,1,1"
-                    FontSize="18"
-                    BorderThickness="0"
-                    Content="=">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:CallMethodAction TargetObject="{Binding}" MethodName="Button_Result"/>
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-        </Grid>
-    </DockPanel>
+                        Grid.Column="0"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="7"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btn8" Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="8"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btn9" Grid.Row="2"
+                        Grid.Column="2"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="9"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btnMultiply" Grid.Row="2"
+                        Grid.Column="3"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="×"
+                        Command="{Binding CalculatorCommand}"/>
+                <!-- 넷째줄 -->
+                <Button x:Name="btn4" Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="4"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btn5" Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="5"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btn6" Grid.Row="3"
+                        Grid.Column="2"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="6"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btnMinus" Grid.Row="3"
+                        Grid.Column="3"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="－"
+                        Command="{Binding CalculatorCommand}"/>
+                <!-- 다섯째줄 -->
+                <Button x:Name="btn1" Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="1"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btn2" Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="2"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                    <Button x:Name="btn3" Grid.Row="4"
+                        Grid.Column="2"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="3"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btnPlus" Grid.Row="4"
+                        Grid.Column="3"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="+"
+                        Command="{Binding CalculatorCommand}"/>
+                    <!-- 여섯째줄 -->
+                <Button x:Name="btnSign" Grid.Row="5"
+                        Grid.Column="0"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="±"
+                        Command="{Binding CalculatorCommand}"/>
+                <Button x:Name="btn0" Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="0"
+                        FontWeight="Bold"
+                        Background="WhiteSmoke"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btnPoint" Grid.Row="5"
+                        Grid.Column="2"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="."
+                        FontWeight="Bold"
+                        Command="{Binding NumberCommand}"/>
+                <Button x:Name="btnResult" Grid.Row="5"
+                        Grid.Column="3"
+                        Margin="2,1,1,1"
+                        FontSize="18"
+                        BorderThickness="0"
+                        Content="="
+                        Command="{Binding CalculatorCommand}"/>
+            </Grid>
+        </DockPanel>
     </ContentControl>
 </Window>

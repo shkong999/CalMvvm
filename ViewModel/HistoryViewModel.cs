@@ -10,10 +10,27 @@ using System.Windows;
 
 namespace CalMvvm.ViewModel
 {
-    public class HistoryViewModel
+    public class HistoryViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
         public ObservableCollection<string> ExpHistory { get; set; } = new ObservableCollection<string>();
 
-        public void History_Clear(object sender, RoutedEventArgs e) => ExpHistory.Clear();
+        private string selectedItem;
+        public string SelectedItem
+        {
+            get => selectedItem;
+            set
+            {
+                selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+        public void ClearHistory(object sender, RoutedEventArgs e) => ExpHistory.Clear();
     }
 }
