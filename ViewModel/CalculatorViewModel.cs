@@ -108,11 +108,25 @@ namespace CalMvvm
         public void OnClickCalculator(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
+            var chkOperator = new HashSet<string> { "+", "－", "×", "÷" };
+
+            if(button.Content.ToString() == "x²")
+            {
+                button.Content = "²";
+            } 
 
             // 연산자 입력 시 계산식에 추가
-            if(expression == null)
+            if (expression == null || button.Content.ToString() == "√" || button.Content.ToString() == "%" 
+                || button.Content.ToString() == "1/x" || button.Content.ToString() == "²")
             {
-                expression = $"{result} {button.Content}";
+                if(button.Content.ToString() == "√")
+                {
+                    expression = $"{button.Content} {result}";
+                }
+                else
+                {
+                    expression = $"{result} {button.Content}";
+                }
             }
             else
             {
@@ -126,6 +140,10 @@ namespace CalMvvm
             {
                 Result = number.NumberFormat(result);
                 HistoryVM.ExpHistory.Add(Expression + "\n" + Result);
+            }
+            else if(!chkOperator.Contains(expression.Substring(expression.Length - 1)))
+            {
+                Result = number.NumberFormat(result);
             }
             else
             {
@@ -151,8 +169,8 @@ namespace CalMvvm
             }
             else if (sign == "C")
             {
-                Result = clear.ClearAll();
-                Expression = clear.ClearAll();
+                result = clear.ClearAll("0");
+                Expression = clear.ClearAll("1");
             }
 
             Result = number.NumberFormat(result);

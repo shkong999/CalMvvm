@@ -28,7 +28,7 @@ namespace CalMvvm.Model
                 case "1/x":
                     result = base.Franction(double.Parse(value));
                     break;
-                case "x²":
+                case "²":
                     result = base.Square(double.Parse(value));
                     break;
                 case "√":
