@@ -125,11 +125,7 @@ namespace CalMvvm.Model
             return removeExpression;
         }
 
-        /*  "C" 버튼 클릭 시
-         *  section > 0 (결과값에 적용) / 1 (계산식에 적용)
-         *  result > 결과값
-         *  expression > 계산식
-         */
+        // "C" 버튼 클릭 시
         public string ClearAll()
         {
             return "";
